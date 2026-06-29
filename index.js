@@ -54,6 +54,26 @@ app.delete("/api/enquiry-delete/:id",async (req,res)=>{
     
 })
 
+app.put("/api/enquiry-update/:id",async (req,res)=>{
+    let {id} = req.params
+    let {name,email,phone,message} = req.body
+    let enquiryUpdateObj= {
+        name:name,
+        email:email,
+        phone:phone,
+        message:message
+    }
+    let updateEnquiry = await enquiryModel.updateOne({_id:id},enquiryUpdateObj)
+     res.send({
+        status:1,
+        message:"data updated",
+        id:id,
+        updRes:updateEnquiry
+       
+    })
+    
+})
+
 mongoose.connect(process.env.DBURL).then(()=>{
     console.log("Connected to mongoose")
     app.listen(process.env.PORT)
