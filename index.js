@@ -23,13 +23,35 @@ app.post("/api/enquiry-insert",(req,res)=>{
     }).catch((err)=>{
          res.send({
         status:0,
-        message:"error"
+        message:"error",
+        error:err
     
-    },err)
+    })
        // console.log(err)
 
     });
 
+})
+
+app.get("/api/enquiry-list",async (req,res)=>{
+    let enquiryList = await enquiryModel.find()
+ res.send({
+        status:1,
+        message:"enquiry list",
+data:  enquiryList  
+    })
+})
+
+app.delete("/api/enquiry-delete/:id",async (req,res)=>{
+    let {id} = req.params
+    let deleteEnquiry = await enquiryModel.deleteOne({_id:id})
+     res.send({
+        status:1,
+        message:"data deleted",
+        id:id,
+        delRes:deleteEnquiry
+    })
+    
 })
 
 mongoose.connect(process.env.DBURL).then(()=>{
