@@ -13,7 +13,22 @@ app.post("/api/enquiry-insert",(req,res)=>{
         phone:phone,
         message:message
     })
-    res.send("data received")
+    enquiry.save().then(()=>{
+    res.send({
+        status:1,
+        message:"data inserted"
+    })
+
+        //console.log("data save")
+    }).catch((err)=>{
+         res.send({
+        status:0,
+        message:"error"
+    
+    },err)
+       // console.log(err)
+
+    });
 
 })
 
